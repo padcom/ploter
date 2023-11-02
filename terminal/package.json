@@ -1,6 +1,6 @@
 {
   "name": "@padcom/grbl-terminal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An advanced GRBL terminal",
   "main": "terminal.mjs",
   "type": "module",
