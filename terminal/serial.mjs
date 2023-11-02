@@ -1,5 +1,6 @@
 import { SerialPort } from 'serialport'
 import { opts } from './globals.mjs'
+import { reset } from './grbl.mjs'
 
 export function initSerialPort(path, baudRate) {
   const port = new SerialPort({ path, baudRate, autoOpen: false })
@@ -27,7 +28,7 @@ export function initSerialPort(path, baudRate) {
       }
 
       // When connected soft-reset GRBL
-      port.write('\x18\n')
+      reset(port)
     }
   })
 
