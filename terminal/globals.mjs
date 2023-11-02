@@ -8,3 +8,13 @@ export const status = {
 }
 
 export const buffer = ['??', '$G', '$I']
+
+/**
+ * @param {import("serialport").SerialPort} port
+ */
+export function sendOneBufferLine(port) {
+  // The buffer is not empty - start sending commands
+  const line = buffer.shift()
+  if (!process.isTTY) console.log(line)
+  command(port, line)
+}
