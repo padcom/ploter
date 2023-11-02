@@ -14,6 +14,7 @@ program
   .name(pkg.name)
   .version(pkg.version)
   .description(pkg.description)
+  .addHelpText('after', '\nHint: use the :help command in terminal for more\n')
   .argument('<port>', 'GRBL serial port to connect to')
   .option('-q, --quiet', 'limit output')
   .option('-b, --baud <speed>', 'baud rate (default: 115200)', 115200)
