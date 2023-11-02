@@ -21,9 +21,9 @@ program
   .action(main)
   .parse(process.argv)
 
-function main() {
-  opts.quiet = this.opts().quiet
-  const port = initSerialPort(this.args[0], this.opts().baud)
+function main(path, options) {
+  opts.quiet = options.quiet
+  const port = initSerialPort(path, options.baud)
   const user = initUserInput(port)
   initGrbl(port, user)
   initSystem(port)
