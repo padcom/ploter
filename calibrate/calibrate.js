@@ -12,6 +12,7 @@ const gcode = [
   'G0 F6000',
   'G1 F100',
   'M3 S64',
+  '',
 ]
 let index = 0
 
