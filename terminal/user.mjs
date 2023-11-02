@@ -1,7 +1,7 @@
 import readline from 'node:readline'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { buffer, status, opts } from './globals.mjs'
-import { reset } from './grbl.mjs'
+import { command, reset } from './grbl.mjs'
 
 function printHelp() {
   console.log('\n* Available commands:')
@@ -32,11 +32,11 @@ function loadProgram(filename) {
     console.log('! No filename specified')
     return []
   }
-  if (!opts.quiet) console.log(`* Reading gcode from ${filename}`)
   if (!existsSync(filename)) {
     console.log(`! File ${filename} not found`)
     return []
   }
+  if (!opts.quiet) console.log(`* Reading gcode from ${filename}`)
   const program = readFileSync(filename).toString().split('\n')
 
   if (!opts.quiet) console.log(`* Read number of lines: ${program.length}`)
@@ -49,6 +49,7 @@ function loadProgram(filename) {
  * @param {String[]} program
  */
 function executeProgram(port, program) {
+  if (program.length === 0) return
   if (!opts.quiet) console.log('* Executing program')
   buffer.push(...program)
   const first = buffer.shift()
