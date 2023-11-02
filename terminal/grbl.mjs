@@ -23,7 +23,7 @@ export function initGrbl(port, user) {
         // The buffer is not empty - start sending commands
         const line = buffer.shift()
         if (!process.isTTY) console.log(line)
-        port.write(line + '\n')
+        command(port, line)
       } else {
         // Ready for interactive mode
         ready = true
@@ -38,16 +38,21 @@ export function initGrbl(port, user) {
   return grbl
 }
 
+export function command(port, cmd) {
+  port.write(`${cmd}\n`)
+  status.ready = false
+}
+
 /**
  * @param {import("serialport").SerialPort} port
  */
 export function reset(port) {
-  port.write('\x18\n')
+  command(port, '\x18')
 }
 
 /**
  * @param {import("serialport").SerialPort} port
  */
 export function unlock(port) {
-  port.write('$X\n')
+  command(port, '$X')
 }

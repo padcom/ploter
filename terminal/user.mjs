@@ -44,7 +44,7 @@ function executeProgram(port, program) {
   if (!opts.quiet) console.log('* Executing program')
   buffer.push(...program)
   const first = buffer.shift()
-  port.write(first + '\n')
+  command(port, first)
 }
 
 const HISTORY_FILENAME = `${process.env.HOME}/.grbl-terminal_history`
@@ -105,8 +105,7 @@ const USER_COMMANDS = [
     detect: () => status.initialized && status.ready,
     execute: (line, port) => {
       // On user input pause input stream until GRBL responds and send the command
-      port.write(line + '\n')
-      status.ready = false
+      command(port, line)
     },
   },
   {
