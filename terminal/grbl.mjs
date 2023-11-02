@@ -21,7 +21,7 @@ export function initGrbl(port, user) {
         sendOneBufferLine(port)
       } else {
         // Ready for interactive mode
-        ready = true
+        status.ready = true
         user.prompt()
       }
     }

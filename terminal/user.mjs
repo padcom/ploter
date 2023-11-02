@@ -28,7 +28,15 @@ function printHelp() {
  * @param {String} filename
  */
 function loadProgram(filename) {
+  if (!filename.trim()) {
+    console.log('! No filename specified')
+    return []
+  }
   if (!opts.quiet) console.log(`* Reading gcode from ${filename}`)
+  if (!existsSync(filename)) {
+    console.log(`! File ${filename} not found`)
+    return []
+  }
   const program = readFileSync(filename).toString().split('\n')
 
   if (!opts.quiet) console.log(`* Read number of lines: ${program.length}`)
@@ -44,7 +52,7 @@ function executeProgram(port, program) {
   if (!opts.quiet) console.log('* Executing program')
   buffer.push(...program)
   const first = buffer.shift()
-  command(port, first)
+  if (first) command(port, first)
 }
 
 const HISTORY_FILENAME = `${process.env.HOME}/.grbl-terminal_history`
