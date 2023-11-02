@@ -11,7 +11,7 @@ import { initGrbl } from './grbl.mjs'
 import { initSystem } from './system.mjs'
 
 program
-  .name(`npx ${pkg.name}`)
+  .name(`npx ${pkg.name}@latest`)
   .version(pkg.version)
   .description(pkg.description)
   .addHelpText('after', '\nHint: use the :help command in terminal for more\n')

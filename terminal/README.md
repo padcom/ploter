@@ -19,7 +19,7 @@ Arguments:
 Options:
   -V, --version       output the version number
   -q, --quiet         limit output
-  -b, --baud <speed>  baud rate (default: 115200) (default: 115200)
+  -b, --baud <speed>  baud rate (default: 115200)
   -h, --help          display help for command
 
 Hint: use the :help command in terminal for more
