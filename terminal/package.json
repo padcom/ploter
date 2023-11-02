@@ -1,17 +1,35 @@
 {
-  "name": "grbl-terminal",
+  "name": "@padcom/grbl-terminal",
   "version": "0.0.1",
   "description": "An advanced GRBL terminal",
-  "main": "terminal.js",
+  "main": "terminal.mjs",
   "type": "module",
   "scripts": {
-    "start": "node terminal.js"
+    "start": "node terminal.js",
+    "prepublishOnly": "npm install"
   },
-  "keywords": [],
+  "keywords": [
+    "grbl",
+    "terminal"
+  ],
   "author": "Matthias Hryniszak <padcom@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "commander": "^11.1.0",
     "serialport": "^12.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/padcom/npm-serve"
+  },
+  "bugs": {
+    "url": "https://github.com/padcom/npm-serve/issues"
+  },
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/padcom"
+  },
+  "bin": {
+    "grbl-terminal": "terminal.mjs"
   }
 }
