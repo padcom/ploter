@@ -15,15 +15,14 @@ export function initGrbl(port, user) {
   grbl.on('data', response => {
     if (response.trim() === `Grbl 1.1g ['$' for help]`) {
       status.initialized = true
-    } else if (status.initialized && response.trim() === `ok`) {
+    } else if (status.initialized) {
       // When GRBL responds with `ok` we are ready to process the next command
-      if (buffer.length > 0) {
+      if (response.trim() === `ok` && buffer.length > 0) {
         sendOneBufferLine(port)
-      } else {
-        // Ready for interactive mode
-        status.ready = true
-        user.prompt()
       }
+      // Ready for interactive mode
+      status.ready = true
+      user.prompt()
     }
   })
 

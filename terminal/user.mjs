@@ -5,23 +5,24 @@ import { command, reset } from './grbl.mjs'
 
 function printHelp() {
   console.log('\n* Available commands:')
-  console.log('  :help          - show this help')
-  console.log('  :quit          - exit')
-  console.log('  :reset         - soft reset GRBL')
-  console.log('  :unlock        - same as $X')
-  console.log('  :exec filename - load gcode from file and execute')
-  console.log('  $$             - show settings')
-  console.log('  $#             - view gcode parameter')
-  console.log('  $G             - displays the active gcode modes in the GRBL parser')
-  console.log('  $I             - show build info')
-  console.log('  $N             - view startup blocks')
-  console.log('  $N0=line       - save first startup block')
-  console.log('  $N1=line       - save second startup block')
-  console.log('  $C             - check gcode mode')
-  console.log('  $X             - kill alarm lock')
-  console.log('  $H             - home axes')
-  console.log('  !              - feed hold')
-  console.log('  ?              - current status')
+  console.log('  :help           - show this help')
+  console.log('  :quit, :exit    - exit')
+  console.log('  :reset          - soft reset GRBL')
+  console.log('  :unlock              - same as $X')
+  console.log('  :exec filename       - load gcode from file and execute')
+  console.log('  :laser on|off|power  - enable/disable laser (def. power: 1; disable: 0)')
+  console.log('  $$                   - show settings')
+  console.log('  $#                   - view gcode parameter')
+  console.log('  $G                   - displays the active gcode modes in the GRBL parser')
+  console.log('  $I                   - show build info')
+  console.log('  $N                   - view startup blocks')
+  console.log('  $N0=line             - save first startup block')
+  console.log('  $N1=line             - save second startup block')
+  console.log('  $C                   - check gcode mode')
+  console.log('  $X                   - kill alarm lock')
+  console.log('  $H                   - home axes')
+  console.log('  !                    - feed hold')
+  console.log('  ?                    - current status')
 }
 
 /**
@@ -71,7 +72,7 @@ const USER_COMMANDS = [
     execute: printHelp,
   },
   {
-    detect: line => line.startsWith(':quit'),
+    detect: line => [':quit', ':exit'].includes(line.toLowerCase()),
     execute: (line, port) => {
       if (!opts.quiet) console.log('* Received quit command')
       port.close()
@@ -82,6 +83,8 @@ const USER_COMMANDS = [
     execute: (line, port) => {
       if (!opts.quiet) console.log('* Resetting')
       reset(port)
+
+      return true
     },
   },
   {
@@ -89,11 +92,13 @@ const USER_COMMANDS = [
     execute: (line, port) => {
       if (!opts.quiet) console.log('* Unlocking')
       unlock(port)
+
+      return true
     },
   },
   {
     detect: line => line.startsWith(':exec '),
-    execute: (line, port, quiet) => {
+    execute: (line, port) => {
       if (status.initialized && status.ready) {
         const filename = line.split(' ').at(-1)
         const program = loadProgram(filename)
@@ -104,6 +109,14 @@ const USER_COMMANDS = [
     },
   },
   {
+    detect: line => line.startsWith(':laser'),
+    execute: (line, port) => {
+      const input = line.split(' ').at(-1)
+      const power = input === 'on' ? '1' : input === 'off' ? 0 : input
+      command(port, `M3 S${power}`)
+    },
+  },
+  {
     // Detect unknown internal commands - all known are above this one
     detect: line => line.startsWith(':'),
     execute: line => {
@@ -111,10 +124,21 @@ const USER_COMMANDS = [
     },
   },
   {
+    detect: line => ['$x', '$h'].includes(line.toLowerCase()),
+    execute: (line, port) => {
+      // On user input pause input stream until GRBL responds and send the command
+      command(port, line)
+
+      return true
+    },
+  },
+  {
     detect: () => status.initialized && status.ready,
     execute: (line, port) => {
       // On user input pause input stream until GRBL responds and send the command
       command(port, line)
+
+      return true
     },
   },
   {
@@ -155,7 +179,7 @@ export function initUserInput(port) {
   user.on('line', line => {
     for (const command of USER_COMMANDS) {
       if (command.detect(line)) {
-        command.execute(line, port)
+        if (!command.execute(line, port)) user.prompt()
         break
       }
     }
