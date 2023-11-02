@@ -18,9 +18,10 @@
     "commander": "^11.1.0",
     "serialport": "^12.0.0"
   },
+  "homepage": "https://github.com/padcom/ploter/tree/master/terminal",
   "repository": {
     "type": "git",
-    "url": "https://github.com/padcom/ploter/tree/master/terminal"
+    "url": "https://github.com/padcom/ploter"
   },
   "bugs": {
     "url": "https://github.com/padcom/ploter/issues"
