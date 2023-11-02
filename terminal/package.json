@@ -20,10 +20,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/padcom/npm-serve"
+    "url": "https://github.com/padcom/ploter/tree/master/terminal"
   },
   "bugs": {
-    "url": "https://github.com/padcom/npm-serve/issues"
+    "url": "https://github.com/padcom/ploter/issues"
   },
   "funding": {
     "type": "patreon",
