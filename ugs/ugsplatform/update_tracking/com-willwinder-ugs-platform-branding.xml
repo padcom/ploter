@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.willwinder.ugs.platform.branding">
+    <module_version install_time="1696568376236" last="true" origin="installer" specification_version="2.0.0.2023.10.06.04.55">
+        <file crc="4071916498" name="config/Modules/com-willwinder-ugs-platform-branding.xml"/>
+        <file crc="4180444033" name="core/locale/core_ugsplatform.jar"/>
+        <file crc="1695325713" name="modules/com-willwinder-ugs-platform-branding.jar"/>
+        <file crc="94430425" name="modules/locale/org-netbeans-core-windows_ugsplatform.jar"/>
+        <file crc="3745666979" name="modules/locale/org-netbeans-core_ugsplatform.jar"/>
+    </module_version>
+</module>

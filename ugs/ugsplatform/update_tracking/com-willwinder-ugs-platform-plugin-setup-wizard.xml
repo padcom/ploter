@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.willwinder.ugs.platform.plugin.setup.wizard">
+    <module_version install_time="1696568377462" last="true" origin="installer" specification_version="2.0.0.2023.10.06.04.55">
+        <file crc="2712630395" name="config/Modules/com-willwinder-ugs-platform-plugin-setup-wizard.xml"/>
+        <file crc="1829160898" name="modules/com-willwinder-ugs-platform-plugin-setup-wizard.jar"/>
+    </module_version>
+</module>

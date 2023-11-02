@@ -1,0 +1,17 @@
+{
+  "name": "grbl-terminal",
+  "version": "0.0.1",
+  "description": "An advanced GRBL terminal",
+  "main": "terminal.js",
+  "type": "module",
+  "scripts": {
+    "start": "node terminal.js"
+  },
+  "keywords": [],
+  "author": "Matthias Hryniszak <padcom@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "serialport": "^12.0.0"
+  }
+}

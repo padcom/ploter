@@ -1,0 +1,13 @@
+{
+  "name": "calibrate",
+  "version": "0.0.1",
+  "description": "",
+  "main": "calibrate.js",
+  "type": "module",
+  "scripts": {
+    "start": "node calibrate.js"
+  },
+  "keywords": [],
+  "author": "Matthias Hryniszak <padcom@gmail.com>",
+  "license": "MIT"
+}

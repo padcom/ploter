@@ -1,0 +1,16 @@
+{
+  "name": "svg2gcode",
+  "version": "0.0.1",
+  "description": "",
+  "main": "svg2gcode.js",
+  "type": "module",
+  "scripts": {
+    "start": "node svg2gcode.js"
+  },
+  "keywords": [],
+  "author": "Matthias Hryniszak <padcom@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "svg-parser": "^2.0.4"
+  }
+}
