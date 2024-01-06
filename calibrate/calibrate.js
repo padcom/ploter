@@ -2,7 +2,7 @@
 
 
 const gcode = [
-  '$H;               ; home',
+//  '$H;               ; home',
   'M3 S0;            ; turn laser off',
   'G10 P0 L20 X0 Y0  ; reset plane to home position',
   'G21               ; millimeters',
@@ -10,23 +10,39 @@ const gcode = [
   'G17               ; XY plane',
   'G94               ; units per minute feed rate mode',
   'G0 F1000          ; feed rate for moves (mm/min)',
-  'G1 F100           ; feed rate for cuts (mm/min)',
-  'M3 S64            ; laser power (1-255)',
+  'G1 F900           ; feed rate for cuts (mm/min)',
+  'M3 S1             ; laser power (0-1000)',
   '',
 ]
+
 let index = 0
 
-function pattern(y, step) {
-  gcode.push(`G0 X1 Y${y}`)
-  for (let power = 64; power < 256; power += step) {
-    gcode.push(`G1 X10 S${power}`)
-    gcode.push(`G1 X0 S${power}`)
+function line(x1, y1, x2, y2, step = 10) {
+  gcode.push(`G0 X${x1} Y${y1}`)
+  for (let power = 400; power <= 1000; power += step) {
+    gcode.push(`G1 X${x2} Y${y2} S${power}`)
+    gcode.push(`G1 X${x1} Y${y1}`)
+    gcode.push(`G1 X${x2} Y${y2}`)
+    gcode.push(`G1 X${x1} Y${y1}`)
   }
 }
 
-for (let step = 1; step < 10; step++) {
-  pattern((step - 1) * 10, step)
+function box(x1, y1, x2, y2, step = 10) {
+  gcode.push(`G0 X${x1} Y${y1}      \t\t; move to start of the box`)
+  for (let power = 400; power <= 1000; power += step) {
+    gcode.push(`G1 X${x2} Y${y1} S${power} \t\t; 1`)
+    gcode.push(`G1 X${x2} Y${y2}           \t; 2`)
+    gcode.push(`G1 X${x1} Y${y2}           \t; 3`)
+    gcode.push(`G1 X${x1} Y${y1}           \t; 4`)
+    gcode.push(`G1 X${x2} Y${y1}           \t; 1`)
+    gcode.push(`G1 X${x2} Y${y2}           \t; 2`)
+    gcode.push(`G1 X${x1} Y${y2}           \t; 3`)
+    gcode.push(`G1 X${x1} Y${y1}           \t; 4`)
+  }
 }
+
+line(0, 10, 20, 10)
+//box(0, 0, 10, 10)
 
 // const POWER_MAX           = 256
 // const POWER_COUNT         = 256-64

@@ -1,5 +1,6 @@
 import { ReadlineParser } from 'serialport'
 import { buffer, sendOneBufferLine, status } from './globals.mjs'
+import { loadSettings } from './settings.mjs'
 
 /**
  * @param {import("serialport").SerialPort} port
@@ -12,17 +13,26 @@ export function initGrbl(port, user) {
   grbl.on('data', console.log)
 
   // Process GRBL responses
-  grbl.on('data', response => {
-    if (response.trim() === `Grbl 1.1g ['$' for help]`) {
+  grbl.on('data', /** @param {String} response */ response => {
+    if (response.match(/Grbl .+? \['\$' for help\]/)) {
       status.initialized = true
+      // send initialization code
+      const gcode = loadSettings()[port.path]?.gcode || []
+      gcode.forEach(command => buffer.push(command))
+      if (buffer.length > 0) {
+        sendOneBufferLine(port, '> ')
+      }
     } else if (status.initialized) {
       // When GRBL responds with `ok` we are ready to process the next command
-      if (response.trim() === `ok` && buffer.length > 0) {
-        sendOneBufferLine(port)
+      if (response.trim() === `ok`) {
+        if (buffer.length > 0) {
+          sendOneBufferLine(port, '> ')
+        } else {
+          // Ready for interactive mode
+          status.ready = true
+          user.prompt()
+        }
       }
-      // Ready for interactive mode
-      status.ready = true
-      user.prompt()
     }
   })
 

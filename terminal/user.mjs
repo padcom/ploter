@@ -10,7 +10,7 @@ function printHelp() {
   console.log('  :reset          - soft reset GRBL')
   console.log('  :unlock              - same as $X')
   console.log('  :exec filename       - load gcode from file and execute')
-  console.log('  :laser on|off|power  - enable/disable laser (def. power: 1; disable: 0)')
+  console.log('  :laser on|off|power  - enable/disable laser (def. power: 1; disable: 0; power in range 0-1000)')
   console.log('  $$                   - show settings')
   console.log('  $#                   - view gcode parameter')
   console.log('  $G                   - displays the active gcode modes in the GRBL parser')
@@ -113,7 +113,7 @@ const USER_COMMANDS = [
     execute: (line, port) => {
       const input = line.split(' ').at(-1)
       const power = input === 'on' ? '1' : input === 'off' ? 0 : input
-      command(port, `M3 S${power}`)
+      command(port, `G1 S${power} F100`)
     },
   },
   {

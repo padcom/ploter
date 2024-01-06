@@ -11,7 +11,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/terminal.js",
+      "program": "${workspaceFolder}/terminal.mjs",
+      "args": ["/dev/ttyUSB0"],
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]

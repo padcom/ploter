@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-
+import { readFileSync, existsSync } from 'node:fs'
+import { join } from 'node:path'
+import { homedir } from 'node:os'
 import { program } from 'commander'
 
 import pkg from './package.json' assert { type: 'json' }
@@ -9,6 +11,7 @@ import { initSerialPort } from './serial.mjs'
 import { initUserInput } from './user.mjs'
 import { initGrbl } from './grbl.mjs'
 import { initSystem } from './system.mjs'
+import { loadSettings } from './settings.mjs'
 
 program
   .name(`npx ${pkg.name}@latest`)
@@ -21,7 +24,10 @@ program
   .action(main)
   .parse(process.argv)
 
+
 function main(path, options) {
+  console.log('settings', loadSettings())
+// console.log(ini.parse(readFileSync('/home/padcom/.grbl-terminal', 'utf-8')))
   opts.quiet = options.quiet
   const port = initSerialPort(path, options.baud)
   const user = initUserInput(port)
