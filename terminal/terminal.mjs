@@ -26,8 +26,6 @@ program
 
 
 function main(path, options) {
-  console.log('settings', loadSettings())
-// console.log(ini.parse(readFileSync('/home/padcom/.grbl-terminal', 'utf-8')))
   opts.quiet = options.quiet
   const port = initSerialPort(path, options.baud)
   const user = initUserInput(port)
