@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { homedir } from 'node:os'
 import { program } from 'commander'
 
-import pkg from './package.json' assert { type: 'json' }
+import pkg from './package.json' with { type: 'json' }
 
 import { opts } from './globals.mjs'
 import { initSerialPort } from './serial.mjs'

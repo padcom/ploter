@@ -2,7 +2,7 @@
 
 import { readFile } from 'node:fs/promises'
 import { parse } from 'svg-parser'
-import pkg from './package.json' assert { type: 'json' }
+import pkg from './package.json' with { type: 'json' }
 
 /**
  * @param {String} source
